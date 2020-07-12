@@ -8,6 +8,10 @@ export default () => {
         <div className="ui comments">
             <h3 className="ui dividing header">Comments</h3>
             <ApprovalCard>
+                <div><h4>Warning!</h4></div>
+                <span>Are you sure you want to do this?</span>
+            </ApprovalCard>
+            <ApprovalCard>
                 <Comment
                     author="Mike"
                     post_at="Today at 08:00"
