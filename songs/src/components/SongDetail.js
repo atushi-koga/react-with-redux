@@ -1,23 +1,25 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 
-class SongDetail extends Component {
-    renderDetail() {
-        if (!this.props.selectSong) {
-            return '';
-        }
-
-        return (
-            <div>
-                <div>{this.props.selectSong.title}</div>
-                <div>{this.props.selectSong.duration}</div>
-            </div>
-        )
+const renderDetail = props => {
+    if (!props) {
+        return <div>Select a song</div>;
     }
 
-    render() {
-        return this.renderDetail();
-    }
+    return (
+        <div>
+            <h3>Details for</h3>
+            <p>
+                Title: {props.title}
+                <br/>
+                Duration: {props.duration}
+            </p>
+        </div>
+    )
+}
+
+const SongDetail = props => {
+    return renderDetail(props.selectSong);
 }
 
 const mapStateToProps = state => {
