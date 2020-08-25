@@ -8,28 +8,28 @@ class PostList extends React.Component {
     }
 
     renderList() {
-        if (!this.props.list.length) {
-            return <div>No Post</div>;
-        }
-
-        return this.props.list.map(elem => {
+        return this.props.posts.map(post => {
             return (
-                <div key={elem.title}>
-                    <span>Post</span>
-                    <div>{elem.title}</div>
-                    <div>{elem.user}</div>
+                <div className="item" key={post.id}>
+                    <i className="large middle aligned icon user"/>
+                    <div className="content">
+                        <div className="description">
+                            <h2>{post.title}</h2>
+                            <p>{post.body}</p>
+                        </div>
+                    </div>
                 </div>
             )
         })
     }
 
     render() {
-        return <div>{this.renderList()}</div>;
+        return <div className="ui relaxed divided list">{this.renderList()}</div>;
     }
 }
 
 const mapStateToProps = state => {
-    return {list: state.postList}
+    return {posts: state.posts}
 }
 
 export default connect(mapStateToProps, {fetchPosts})(PostList);
