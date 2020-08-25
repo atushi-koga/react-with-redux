@@ -5,3 +5,7 @@ export const fetchTasks = () => async dispatch => {
 
     dispatch({type: 'FETCH_TASKS', payload: response.data});
 }
+
+export const selectTask = task => {
+    return {type: 'SELECT_TASK', payload: task}
+}

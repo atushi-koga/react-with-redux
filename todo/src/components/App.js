@@ -1,6 +1,12 @@
 import React from "react";
 import Tasks from "./Tasks";
+import TaskForm from "./TaskForm";
 
 export default () => {
-    return <Tasks/>;
+    return (
+        <div>
+            <Tasks/>
+            <TaskForm/>
+        </div>
+    );
 }
