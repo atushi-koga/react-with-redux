@@ -1,5 +1,6 @@
 import React from "react";
+import Tasks from "./Tasks";
 
 export default () => {
-    return <div>App</div>;
+    return <Tasks/>;
 }
