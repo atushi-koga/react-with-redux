@@ -1,9 +1,7 @@
-export const fetchTasks = () => {
-    const dummy = [
-        {id: 1, title: 'title1', body: 'body1'},
-        {id: 2, title: 'title2', body: 'body2'},
-        {id: 3, title: 'title3', body: 'body3'},
-    ];
+import taskAPI from "../apis/taskAPI";
 
-    return {type: 'FETCH_TASKS', payload: dummy};
+export const fetchTasks = () => async dispatch => {
+    const response = await taskAPI.get('/events?token=token123');
+
+    dispatch({type: 'FETCH_TASKS', payload: response.data});
 }
