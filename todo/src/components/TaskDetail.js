@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import {deleteTask} from "../actions";
 
 class TaskDetail extends React.Component {
     renderForm() {
@@ -9,11 +10,14 @@ class TaskDetail extends React.Component {
 
         return (
             // 編集ボタンを押したら編集フォームに切り替わるようにする。（stateを使うか）
-          <div>
-              <div>ID: {this.props.task.id}</div>
-              <div>Title: {this.props.task.title}</div>
-              <div>Body: {this.props.task.body}</div>
-          </div>
+            <div>
+                <div>ID: {this.props.task.id}</div>
+                <div>Title: {this.props.task.title}</div>
+                <div>Body: {this.props.task.body}</div>
+                <button onClick={() => this.props.deleteTask(this.props.task.id)}
+                >削除
+                </button>
+            </div>
         );
     }
 
@@ -26,4 +30,4 @@ const mapStateToProps = state => {
     return {task: state.task};
 }
 
-export default connect(mapStateToProps)(TaskDetail);
+export default connect(mapStateToProps, {deleteTask})(TaskDetail);
