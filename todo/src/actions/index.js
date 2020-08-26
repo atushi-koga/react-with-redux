@@ -1,7 +1,9 @@
 import taskAPI from "../apis/taskAPI";
 
+const QUERY = '?token=token123';
+
 export const fetchTasks = () => async dispatch => {
-    const response = await taskAPI.get('/events?token=token123');
+    const response = await taskAPI.get(`/events${QUERY}`);
 
     dispatch({type: 'FETCH_TASKS', payload: response.data});
 }
@@ -11,7 +13,18 @@ export const selectTask = task => {
 }
 
 export const createTask = (title, body) => async dispatch => {
-    const newTask = await taskAPI.post('/events/?token=token123', {title, body});
+    const newTask = await taskAPI.post(`/events${QUERY}`, {title, body});
 
     dispatch({type: 'CREATE_TASK', payload: newTask.data});
+}
+
+export const deleteTask = id => async (dispatch) => {
+    await taskAPI.delete(`/events/${id}${QUERY}`)
+
+    dispatch({
+        type: 'DELETE_TASK',
+        payload: {
+            taskId: id
+        }
+    })
 }
