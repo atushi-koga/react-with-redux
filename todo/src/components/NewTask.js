@@ -6,7 +6,7 @@ class NewTask extends React.Component {
     state = {
         title: '',
         body: ''
-    }
+    };
 
     render() {
         return (

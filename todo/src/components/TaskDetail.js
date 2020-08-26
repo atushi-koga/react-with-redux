@@ -3,18 +3,32 @@ import {connect} from "react-redux";
 import {deleteTask} from "../actions";
 
 class TaskDetail extends React.Component {
-    renderForm() {
-        if (!this.props.task) {
-            return null;
-        }
+    state = {
+        id: this.props.task.id,
+        title: this.props.task.title,
+        body: this.props.task.body,
+    }
 
+    renderForm() {
         return (
-            // 編集ボタンを押したら編集フォームに切り替わるようにする。（stateを使うか）
             <div>
-                <div>ID: {this.props.task.id}</div>
-                <div>Title: {this.props.task.title}</div>
-                <div>Body: {this.props.task.body}</div>
-                <button onClick={() => this.props.deleteTask(this.props.task.id)}
+                <div>ID: {this.state.id}</div>
+                <div>
+                    Title:
+                    <input
+                        type="text"
+                        value={this.state.title}
+                        onChange={e => this.setState({title: e.target.value})}
+                    />
+                </div>
+                <div>
+                    Body:
+                    <textarea
+                        value={this.state.body}
+                        onChange={e => this.setState({body: e.target.value})}
+                    />
+                </div>
+                <button onClick={() => this.props.deleteTask(this.state.id)}
                 >削除
                 </button>
             </div>
@@ -26,8 +40,4 @@ class TaskDetail extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {task: state.task};
-}
-
-export default connect(mapStateToProps, {deleteTask})(TaskDetail);
+export default connect(null, {deleteTask})(TaskDetail);

@@ -1,7 +1,7 @@
 import React from "react";
 import Tasks from "./Tasks";
-import TaskDetail from "./TaskDetail";
 import NewTask from "./NewTask";
+import TaskDetailControl from "./TaskDetailControl";
 
 export default () => {
     return (
@@ -10,7 +10,7 @@ export default () => {
             <br/><br/>
             <Tasks/>
             <br/><br/>
-            <TaskDetail/>
+            <TaskDetailControl/>
         </div>
     );
 }
