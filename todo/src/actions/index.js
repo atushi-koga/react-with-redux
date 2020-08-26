@@ -18,6 +18,12 @@ export const createTask = (title, body) => async dispatch => {
     dispatch({type: 'CREATE_TASK', payload: newTask.data});
 }
 
+export const editTask = task => async dispatch => {
+    const edited = await taskAPI.put(`/events/${task.id}${QUERY}`, task);
+
+    dispatch({type: 'EDIT_TASK', payload: edited.data});
+}
+
 export const deleteTask = id => async (dispatch) => {
     await taskAPI.delete(`/events/${id}${QUERY}`)
 

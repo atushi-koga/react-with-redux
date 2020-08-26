@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {deleteTask} from "../actions";
+import {deleteTask, editTask} from "../actions";
 
 class TaskDetail extends React.Component {
     state = {
@@ -28,9 +28,8 @@ class TaskDetail extends React.Component {
                         onChange={e => this.setState({body: e.target.value})}
                     />
                 </div>
-                <button onClick={() => this.props.deleteTask(this.state.id)}
-                >削除
-                </button>
+                <button onClick={() => this.props.deleteTask(this.state.id)}>削除</button>
+                <button onClick={() => this.props.editTask(this.state)}>保存</button>
             </div>
         );
     }
@@ -40,4 +39,4 @@ class TaskDetail extends React.Component {
     }
 }
 
-export default connect(null, {deleteTask})(TaskDetail);
+export default connect(null, {editTask, deleteTask})(TaskDetail);
