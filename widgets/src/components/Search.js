@@ -1,9 +1,25 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Wikipedia from "../api/Wikipedia";
 
 const Search = () => {
-    const [term, setTerm] = useState('');
+    const [term, setTerm] = useState('programing');
     const [results, setResults] = useState([]);
+
+    useEffect(() => {
+        const search = async () => {
+            const {data} = await Wikipedia.get(`/w/api.php`, {
+                params: {
+                    action: 'query',
+                    list: 'search',
+                    origin: '*',
+                    format: 'json',
+                    srsearch: term
+                }
+            });
+            setResults(data.query.search);
+        }
+        search();
+    }, [term]);
 
     const searchTerm = async () => {
         const response = await Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`);
@@ -24,9 +40,17 @@ const Search = () => {
 
     return (
         <div>
-            <div>
-                <label>Search</label>
-                <input type="text" name="search_term" onChange={e => setTerm(e.target.value)}/>
+            <div className="ui form">
+                <div className="field">
+                    <label>Enter Search Term</label>
+                    <input
+                        type="text"
+                        name="search_term"
+                        value={term}
+                        className="input"
+                        onChange={e => setTerm(e.target.value)}
+                    />
+                </div>
                 <button type="button" onClick={searchTerm}>検索</button>
                 {renderResult()}
             </div>

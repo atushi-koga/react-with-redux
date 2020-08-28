@@ -97,3 +97,68 @@ export default Accordion;
 This first argument(activeIndex) coming back from calling useState is the piece of state that we are trying to keep track of.  
 The second argument(setActiveIndex) inside the array is a function that we call to update our piece of state.  
 Whenever we call useState, it takes in one argument and that is going to be the default value for our piece of state. 
+
+## useEffect
+We configure the hook to run some code automatically in one of three scenarios.  
+We use `useEffect` function.  
+The first argument is always function. It will be automatically executed at some point time.  
+The second argument that we put inside of here that controls we in our code gets executed. It is always array or none.
+
+### useEffect scenarios
+1. When the component is rendered for the first time only.
+```js
+useEffect(() => {
+    console.log('I run at initial render');
+}, []);
+```
+
+2. When the component is rendered for the first time and whenever it rerenders.
+```js
+useEffect(() => {
+    console.log('I run at initial render and run after every rerender');
+});
+```
+
+3. When the component is rendered for the first time and whenever it rerenders and some piece of data has changed.
+```js
+useEffect(() => {
+    console.log("I run at initial render and run after every rerender and 'term' has changed");
+}, [term]);
+```
+
+### Async code in useEffect
+can't execute
+```js
+useEffect(async () => {
+    await Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`);
+}, [term]);
+```
+
+three solution
+
+react recommends based upon that error message 
+```js
+useEffect(() => {
+    const search = async () => {
+        await Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`);
+    }
+    search();
+}, [term]);
+```
+
+```js
+useEffect(() => {
+    (async () => {
+        const response = await Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`);
+    })();
+}, [term]);
+```
+
+using normal promises instead of async/await keywords. 
+
+```js
+useEffect(() => {
+    Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`)
+        .then(response => console.log(response.data));
+}, [term]);
+```
