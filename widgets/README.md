@@ -1,68 +1,99 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Understanding Hooks in React 
 
-## Available Scripts
+## Hooks System
+Hooks are a way to write reusable code, instead of more classic techiniques like Inheritance.
 
-In the project directory, you can run:
+- useState  
+Function that lets you use state in a functional component.
+- useEffect  
+Function that lets you use something like lifecycle methods in a functional component.
+- useRef  
+Function that lets you use create a 'ref' in a functional component.
 
-### `yarn start`
+## use state
+the goal of useState is specifically to give us access to the state system inside of a functional component.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```js
+// use state in a Class based Component
+import React from "react";
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+class Accordion extends React.Component {
+    state = {activeIndex: null};  // initialize value of state
 
-### `yarn test`
+    onTitleClick(index) {
+        this.setState({activeIndex: index});  // value only changed through 'setState' function
+    }
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    render() {
+        const renderedItems = this.props.items.map((item, index) => {
+            return (
+                <React.Fragment key={item.title}>
+                    <div
+                        className="title active"
+                        onClick={() => this.onTitleClick(index)}
+                    >
+                        <i className="dropdown icon"></i>
+                        {item.title}
+                    </div>
+                    <div className="content active">
+                        <p>{item.content}</p>
+                    </div>
+                </React.Fragment>
+            );
+        });
 
-### `yarn build`
+        return (
+            <div className="ui styled accordion">
+                {renderedItems}
+                <h1>{this.state.activeIndex}</h1>  // reference value through 'this.state'
+            </div>
+        );
+    }
+}
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+export default Accordion;
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```js
+// use state in a functional Component
+import React, {useState} from "react";
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const Accordion = ({items}) => {
+    const [activeIndex, setActiveIndex] = useState(null);  // initialize value of state
 
-### `yarn eject`
+    const onTitleClick = index => {
+        setActiveIndex(index);  // value only changed through the setter function and provide new value
+    }
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    const renderedItems = items.map((item, index) => {
+        return (
+            <React.Fragment key={item.title}>
+                <div
+                    className="title active"
+                    onClick={() => onTitleClick(index)}
+                >
+                    <i className="dropdown icon"></i>
+                    {item.title}
+                </div>
+                <div className="content active">
+                    <p>{item.content}</p>
+                </div>
+            </React.Fragment>
+        );
+    });
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    return (
+        <div className="ui styled accordion">
+            {renderedItems}
+            <h1>{activeIndex}</h1>  // reference value through the first argument of useState function
+        </div>
+    );
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+export default Accordion;
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### const [activeIndex, setActiveIndex] = useState(null);
+This first argument(activeIndex) coming back from calling useState is the piece of state that we are trying to keep track of.  
+The second argument(setActiveIndex) inside the array is a function that we call to update our piece of state.  
+Whenever we call useState, it takes in one argument and that is going to be the default value for our piece of state. 
