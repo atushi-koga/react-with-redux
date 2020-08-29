@@ -29,10 +29,11 @@ const Search = () => {
     const renderResult = () => {
         return results.map(result => {
             return (
-                <div key={result.pageid}>
-                    <div>title: {result.title}</div>
-                    <div>snippet: {result.snippet}</div>
-                    <br/>
+                <div className="item" key={result.pageid}>
+                    <div className="content">
+                        <div className="header">title: {result.title}</div>
+                        {result.snippet}
+                    </div>
                 </div>
             );
         })
@@ -52,8 +53,8 @@ const Search = () => {
                     />
                 </div>
                 <button type="button" onClick={searchTerm}>検索</button>
-                {renderResult()}
             </div>
+            <div className="ui celled list">{renderResult()}</div>
         </div>
     );
 }
