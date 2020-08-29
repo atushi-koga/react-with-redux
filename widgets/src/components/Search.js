@@ -18,7 +18,9 @@ const Search = () => {
             });
             setResults(data.query.search);
         }
-        search();
+        if (term) {
+            search();
+        }
     }, [term]);
 
     const searchTerm = async () => {
@@ -40,7 +42,7 @@ const Search = () => {
                     </div>
                     <div className="content">
                         <div className="header">title: {result.title}</div>
-                        <span dangerouslySetInnerHTML={{ __html: result.snippet }}></span>
+                        <span dangerouslySetInnerHTML={{__html: result.snippet}}></span>
                     </div>
                 </div>
             );
