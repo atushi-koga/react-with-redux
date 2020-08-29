@@ -162,3 +162,5 @@ useEffect(() => {
         .then(response => console.log(response.data));
 }, [term]);
 ```
+
+### Cleanup Function

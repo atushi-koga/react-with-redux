@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Wikipedia from "../api/Wikipedia";
 
 const Search = () => {
-    const [term, setTerm] = useState('programing');
+    const [term, setTerm] = useState('');
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -18,8 +18,14 @@ const Search = () => {
             });
             setResults(data.query.search);
         }
-        if (term) {
-            search();
+        const timeoutId = setTimeout(() => {
+            if (term) {
+                search()
+            }
+        }, 1000);
+
+        return () => {
+            clearTimeout(timeoutId);
         }
     }, [term]);
 
