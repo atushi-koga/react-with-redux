@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Wikipedia from "../api/Wikipedia";
 
 const Search = () => {
-    const [term, setTerm] = useState('');
+    const [term, setTerm] = useState('programing');
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -18,14 +18,21 @@ const Search = () => {
             });
             setResults(data.query.search);
         }
-        const timeoutId = setTimeout(() => {
-            if (term) {
-                search()
-            }
-        }, 1000);
 
-        return () => {
-            clearTimeout(timeoutId);
+        // 初回レンダリング時にAPIリクエストを直ちに行う
+        // そうしないと画面に結果が表示されるのが遅くなるので
+        if (term && !results.length) {
+            search();
+        } else {
+            const timeoutId = setTimeout(() => {
+                if (term) {
+                    search()
+                }
+            }, 500);
+
+            return () => {
+                clearTimeout(timeoutId);
+            }
         }
     }, [term]);
 
