@@ -34,7 +34,7 @@ const Search = () => {
                 clearTimeout(timeoutId);
             }
         }
-    }, [term, results.length]); // @todo: APIを2回呼んでしまっているので修正する
+    }, [term, results.length]); // @todo: APIを2回呼んでしまっているので修正する  https://www.udemy.com/course/react-redux/learn/lecture/20787776#notes
 
     const searchTerm = async () => {
         const response = await Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`);

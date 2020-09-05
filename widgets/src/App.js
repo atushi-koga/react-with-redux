@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import Search from "./components/Search";
 import Dropdown from "./components/Dropdown";
 
 // const items = [

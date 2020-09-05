@@ -170,3 +170,6 @@ useEffect(() => {
 
 ### Cleanup Function
 アンマウント時に実行される
+
+## useRef
+https://www.udemy.com/course/react-redux/learn/lecture/20787850#notes
