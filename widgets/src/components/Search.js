@@ -34,7 +34,7 @@ const Search = () => {
                 clearTimeout(timeoutId);
             }
         }
-    }, [term]);
+    }, [term, results.length]); // @todo: APIを2回呼んでしまっているので修正する
 
     const searchTerm = async () => {
         const response = await Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`);
@@ -42,6 +42,7 @@ const Search = () => {
     }
 
     const renderResult = () => {
+        console.log('renderResult');
         return results.map(result => {
             return (
                 <div className="item" key={result.pageid}>

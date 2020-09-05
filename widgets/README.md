@@ -105,26 +105,31 @@ The first argument is always function. It will be automatically executed at some
 The second argument that we put inside of here that controls we in our code gets executed. It is always array or none.
 
 ### useEffect scenarios
-1. When the component is rendered for the first time only.
+
+
+1. 副作用とそのクリーンアップを1度だけ実行
 ```js
 useEffect(() => {
     console.log('I run at initial render');
 }, []);
 ```
+マウント時に副作用、アンマウント時にクリーンアップが実行される
 
-2. When the component is rendered for the first time and whenever it rerenders.
+2. 初回レンダリング時と再レンダリング時に実行される
 ```js
 useEffect(() => {
     console.log('I run at initial render and run after every rerender');
 });
 ```
 
-3. When the component is rendered for the first time and whenever it rerenders and some piece of data has changed.
+3. コンポーネントの初回レンダリング時と、再レンダー間で特定の値が変わっていない場合
 ```js
 useEffect(() => {
-    console.log("I run at initial render and run after every rerender and 'term' has changed");
-}, [term]);
+  document.title = `You clicked ${count} times`;
+}, [count]); // Only re-run the effect if count changes or initial rendering
 ```
+https://ja.reactjs.org/docs/hooks-effect.html
+
 
 ### Async code in useEffect
 can't execute
@@ -164,3 +169,4 @@ useEffect(() => {
 ```
 
 ### Cleanup Function
+アンマウント時に実行される
