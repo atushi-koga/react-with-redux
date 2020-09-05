@@ -5,17 +5,18 @@ const Dropdown = ({options, selected, onSelectedChange}) => {
     const ref = useRef();
 
     useEffect(() => {
-        document.body.addEventListener('click', event => {
-            if(ref.current.contains(event.target)){
+        const close = event => {
+            if (ref.current.contains(event.target)) {
                 return;
             }
-            console.log('Body Click!!!');
             setOpen(false);
-        }, false)
+        };
+        document.body.addEventListener('click', close);
+
+        return () => document.body.removeEventListener('click', close);
     }, []);
 
     const toggleDropdown = event => {
-        console.log('form Click!!!');
         event.stopPropagation();
         setOpen(!open);
     };
@@ -29,7 +30,6 @@ const Dropdown = ({options, selected, onSelectedChange}) => {
             <div
                 key={option.value}
                 onClick={() => {
-                    console.log('Item Click!!!');
                     onSelectedChange(option)
                 }}
                 className="item"
@@ -43,7 +43,8 @@ const Dropdown = ({options, selected, onSelectedChange}) => {
         <div ref={ref} className="ui form">
             <div className="field">
                 <label className="label">Select a Color</label>
-                <div className={`ui selection dropdown ${open ? 'visible active' : ''}`} onClick={event => toggleDropdown(event)}>
+                <div className={`ui selection dropdown ${open ? 'visible active' : ''}`}
+                     onClick={event => toggleDropdown(event)}>
                     <i className="dropdown icon"></i>
                     <div className="text">{selected.label}</div>
                     <div className={`menu ${open ? 'visible transition' : ''}`}>{renderedOptions}</div>
