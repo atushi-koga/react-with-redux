@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Dropdown from "./Dropdown";
 import InputText from "./InputText";
+import Translate from "./Translate";
 
 const options = [
     {label: 'Afrikaans', value: 'af'},
@@ -24,7 +25,10 @@ const TranslateForm = () => {
                 selected={language}
                 onSelectedChange={setLanguage}
             />
-            <div>{input}</div>
+            <Translate
+                input={input}
+                language={language}
+            />
         </>
     );
 }
