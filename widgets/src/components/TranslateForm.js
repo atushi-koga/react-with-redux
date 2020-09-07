@@ -8,7 +8,7 @@ const options = [
     {label: 'Hindi', value: 'hi'},
 ];
 
-const Translate = () => {
+const TranslateForm = () => {
     const [language, setLanguage] = useState(options[0]);
     const [input, setInput] = useState('');
 
@@ -29,4 +29,4 @@ const Translate = () => {
     );
 }
 
-export default Translate;
+export default TranslateForm;
