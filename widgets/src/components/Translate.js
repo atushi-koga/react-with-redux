@@ -1,20 +1,35 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
+import Dropdown from "./Dropdown";
+import InputText from "./InputText";
+import Convert from "./Convert";
 
-const Translate = ({input, language}) => {
-    const [output, setOutput] = useState('');
-    console.log('render');
+const options = [
+    {label: 'Afrikaans', value: 'af'},
+    {label: 'Arabic', value: 'ar'},
+    {label: 'Hindi', value: 'hi'},
+];
 
-    useEffect(() => {
-        console.log('useEffect');
-        (async () => await setTimeout(() => {
-            console.log('setOutput');
-            setOutput('hello');
-        }, 3000))();
-
-    }, [input, language]);
+const Translate = () => {
+    const [language, setLanguage] = useState(options[0]);
+    const [input, setInput] = useState('');
 
     return (
-        <div>{output}</div>
+        <>
+            <InputText
+                input={input}
+                onInputChange={setInput}
+            />
+            <Dropdown
+                label="Select a Language"
+                options={options}
+                selected={language}
+                onSelectedChange={setLanguage}
+            />
+            <Convert
+                input={input}
+                language={language}
+            />
+        </>
     );
 }
 

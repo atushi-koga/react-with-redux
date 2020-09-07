@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Dropdown from "./components/Dropdown";
-import TranslateForm from "./components/TranslateForm";
+import Translate from "./components/Translate";
 
 // const items = [
 //     {
@@ -40,7 +40,7 @@ export default () => {
             {/*        onSelectedChange={setSelected}*/}
             {/*    /> : null*/}
             {/*}*/}
-            <TranslateForm/>
+            <Translate/>
         </div>
     )
 }
