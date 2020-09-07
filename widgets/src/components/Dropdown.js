@@ -16,11 +16,6 @@ const Dropdown = ({options, selected, onSelectedChange}) => {
         return () => document.body.removeEventListener('click', close);
     }, []);
 
-    const toggleDropdown = event => {
-        event.stopPropagation();
-        setOpen(!open);
-    };
-
     const renderedOptions = options.map(option => {
         if (option.value === selected.value) {
             return null;
@@ -29,9 +24,7 @@ const Dropdown = ({options, selected, onSelectedChange}) => {
         return (
             <div
                 key={option.value}
-                onClick={() => {
-                    onSelectedChange(option)
-                }}
+                onClick={() => onSelectedChange(option)}
                 className="item"
             >
                 {option.label}
@@ -44,7 +37,7 @@ const Dropdown = ({options, selected, onSelectedChange}) => {
             <div className="field">
                 <label className="label">Select a Color</label>
                 <div className={`ui selection dropdown ${open ? 'visible active' : ''}`}
-                     onClick={event => toggleDropdown(event)}>
+                     onClick={() => setOpen(!open)}>
                     <i className="dropdown icon"></i>
                     <div className="text">{selected.label}</div>
                     <div className={`menu ${open ? 'visible transition' : ''}`}>{renderedOptions}</div>
