@@ -34,6 +34,7 @@ export default () => {
             {/*<button onClick={() => setShowDropdown(!showDropdown)}>Toggle Dropdown</button>*/}
             {/*{showDropdown ?*/}
             {/*    <Dropdown*/}
+            {/*        label="Select a Color"*/}
             {/*        options={options}*/}
             {/*        selected={selected}*/}
             {/*        onSelectedChange={setSelected}*/}
