@@ -1,20 +1,26 @@
 import React, {useEffect, useState} from "react";
+import GoogleTranslate from "../api/GoogleTranslate";
 
 const Convert = ({input, language}) => {
     const [output, setOutput] = useState('');
-    console.log('render');
 
     useEffect(() => {
-        console.log('useEffect');
-        (async () => await setTimeout(() => {
-            console.log('setOutput');
-            setOutput('hello');
-        }, 3000))();
-
+        (async () => {
+            const response = await GoogleTranslate.post('', {}, {
+                params:{
+                    q: input,
+                    target: language.value,
+                    key: 'AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM'
+                }
+            });
+            setOutput(response.data.data.translations[0].translatedText);
+        })();
     }, [input, language]);
 
     return (
-        <div>{output}</div>
+        <div>
+            <h1 className="ui header">{output}</h1>
+        </div>
     );
 }
 
