@@ -5,17 +5,21 @@ const Convert = ({input, language}) => {
     const [output, setOutput] = useState('');
 
     useEffect(() => {
-        (async () => {
+        const translate = async () => {
             const response = await GoogleTranslate.post('', {}, {
-                params:{
+                params: {
                     q: input,
                     target: language.value,
                     key: 'AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM'
                 }
             });
             setOutput(response.data.data.translations[0].translatedText);
-        })();
-    }, [input, language]);
+        };
+
+        const timerId = setTimeout(translate, 500);
+        return () => clearTimeout(timerId);
+
+    }, [input, language]);  // @todo: 修正する。 https://www.udemy.com/course/react-redux/learn/lecture/20787910#notes
 
     return (
         <div>

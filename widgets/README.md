@@ -98,50 +98,71 @@ This first argument(activeIndex) coming back from calling useState is the piece 
 The second argument(setActiveIndex) inside the array is a function that we call to update our piece of state.  
 Whenever we call useState, it takes in one argument and that is going to be the default value for our piece of state. 
 
-## useEffect
-We configure the hook to run some code automatically in one of three scenarios.  
-We use `useEffect` function.  
-The first argument is always function. It will be automatically executed at some point time.  
-The second argument that we put inside of here that controls we in our code gets executed. It is always array or none.
+## useEffect とは
+React が DOM を更新した後で追加のコードを実行したい場合に `useEffect` を使用する。
+```js
+useEffect(() => {
+    console.log('I run after render');
+});
+```
+`useEffect` の第一引数はレンダリング後に実行したい関数、第二引数は未指定か空配列か配列のいずれかであり、この値によって実行タイミングが決められる。
 
-### useEffect scenarios
-
-
-1. 副作用とそのクリーンアップを1度だけ実行
+### useEffect 実行タイミング
+１. 第二引数が空配列の時、初回レンダリング後に1度だけ実行
 ```js
 useEffect(() => {
     console.log('I run at initial render');
 }, []);
 ```
-マウント時に副作用、アンマウント時にクリーンアップが実行される
 
-2. 初回レンダリング時と再レンダリング時に実行される
+２. 第二引数が未指定の時、レンダリング後に毎回実行される
 ```js
 useEffect(() => {
     console.log('I run at initial render and run after every rerender');
 });
 ```
+レンダリング後に毎回実行されるという意味では、Reactのクラスコンポーネントの `componentDidMount` と `componentDidUpdate` に同じ処理を指定しているのと同じ状態。
+```js
+componentDidMount() {
+    console.log('I run at initial render and run after every rerender');
+}
+componentDidUpdate() {
+    console.log('I run at initial render and run after every rerender');
+}
+```
 
-3. コンポーネントの初回レンダリング時と、再レンダー間で特定の値が変わっていない場合
+３. コンポーネントの初回レンダリング時と、再レンダリング間で特定の値が更新された場合
 ```js
 useEffect(() => {
   document.title = `You clicked ${count} times`;
 }, [count]); // Only re-run the effect if count changes or initial rendering
 ```
-https://ja.reactjs.org/docs/hooks-effect.html
+>  もし count が 5 で、次回のコンポーネントのレンダー時にも count がまだ 5 であった場合、React は前回のレンダー時に覚えておいた [5] と今回のレンダーの [5] とを比較します。配列内のすべての要素が同一 (5 === 5) ですので、React は副作用をスキップします。これが最適化です。
+
+### Cleanup Function
+`useEffect` の第一引数に指定した関数は、関数を返すことができる。
+この返却値となる関数はクリーンアップと呼ばれ、Reactはコンポーネントがアンマウントされるときにそれを実行する。
+ライフサイクルメソッドの `componentWillUnmount` と同じようなもの。
+```js
+useEffect(() => {
+  console.log('execute after render');
+  return () => console.log('execute before unmount');
+});
+```
 
 
 ### Async code in useEffect
-can't execute
+`useEffect` に渡す関数に直接asyncキーワードを指定できない。
 ```js
+// 実行できないコード
 useEffect(async () => {
     await Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`);
 }, [term]);
 ```
 
-three solution
+この解決策は3つある。
 
-react recommends based upon that error message 
+１. 関数を定義しその中でasyncキーワードを指定する 
 ```js
 useEffect(() => {
     const search = async () => {
@@ -151,6 +172,7 @@ useEffect(() => {
 }, [term]);
 ```
 
+２. 即時関数を使う
 ```js
 useEffect(() => {
     (async () => {
@@ -159,17 +181,13 @@ useEffect(() => {
 }, [term]);
 ```
 
-using normal promises instead of async/await keywords. 
-
+３. プロミスを使用する 
 ```js
 useEffect(() => {
     Wikipedia.get(`/w/api.php?action=query&list=search&format=json&origin=*&srsearch=${term}`)
         .then(response => console.log(response.data));
 }, [term]);
 ```
-
-### Cleanup Function
-アンマウント時に実行される
 
 ## useRef
 https://www.udemy.com/course/react-redux/learn/lecture/20787850#notes
