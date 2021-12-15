@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {selectSong} from '../actions';
 
-class SongList extends Component {
-    renderList() {
-        return this.props.songs.map(song => {
+const SongList = props => {
+    const renderList = () => {
+        return props.songs.map(song => {
             return (
                 <div className="item" key={song.title}>
                     <div className="right floated content">
                         <button
                             className="ui button primary"
-                            onClick={() => this.props.selectSong(song)}
+                            onClick={() => props.selectSong(song)}
                         >
                             Select
                         </button>
@@ -20,10 +20,9 @@ class SongList extends Component {
             );
         })
     }
-
-    render() {
-        return <div className="ui divided list">{this.renderList()}</div>
-    }
+    return (
+        <div className="ui divided list">{renderList()}</div>
+    );
 }
 
 // state に store のデータが入っていて、ここで必要なものを取り出しオブジェクトにして返す
