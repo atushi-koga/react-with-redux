@@ -1,9 +1,33 @@
 import axios from 'axios';
 
-export const fetchPosts = async() => {
+// long hand
+// export const fetchPosts = () => {
+//     return async function(dispatch, getState) {
+//         const response = await axios.create({baseURL: 'https://jsonplaceholder.typicode.com'}).get('/posts');
+//         return {
+//             type: 'FETCH_POSTS',
+//             payload: response
+//         }
+//     }
+// }
+
+
+// short hand
+export const fetchPosts = () => async dispatch => {
     const response = await axios.create({baseURL: 'https://jsonplaceholder.typicode.com'}).get('/posts');
-    return {
+    dispatch({
         type: 'FETCH_POSTS',
         payload: response
-    }
+    });
 }
+
+// dispatch を関数内部で呼ばずに、action object を返すのはありなのか？
+// export const fetchPosts = () => {
+//     return async(dispatch, getState) => {
+//         const response = await axios.create({baseURL: 'https://jsonplaceholder.typicode.com'}).get('/posts');
+//         return {
+//             type: 'FETCH_POSTS',
+//             payload: response
+//         }
+//     }
+// }
