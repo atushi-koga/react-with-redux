@@ -17,7 +17,7 @@ export const fetchPosts = () => async dispatch => {
     const response = await axios.create({baseURL: 'https://jsonplaceholder.typicode.com'}).get('/posts');
     dispatch({
         type: 'FETCH_POSTS',
-        payload: response
+        payload: response.data
     });
 }
 
